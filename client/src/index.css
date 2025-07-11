@@ -235,4 +235,134 @@
   .animate-pulse-glow {
     animation: pulse-glow 2s ease-in-out infinite alternate;
   }
+
+  .testimonial-column {
+    overflow: hidden;
+    height: 100%;
+    position: relative;
+  }
+
+  .testimonial-scroll {
+    animation: scrollUp 20s linear infinite;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .testimonial-column:hover .testimonial-scroll {
+    animation-play-state: paused;
+  }
+
+  .testimonial-card {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    min-height: 180px;
+    flex-shrink: 0;
+  }
+
+  .horizontal-scroll-container {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .horizontal-scroll-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .horizontal-scroll-content {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    min-width: max-content;
+  }
+
+  .horizontal-scroll-item {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+
+  @keyframes scrollUp {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 1024px) {
+    .horizontal-scroll-item .group {
+      width: 300px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .benefit-card {
+      min-width: 250px;
+    }
+    
+    .testimonial-card {
+      min-height: 160px;
+    }
+    
+    .form-container {
+      padding: 1.5rem;
+    }
+    
+    .horizontal-scroll-item .group {
+      width: 280px;
+      height: 200px;
+    }
+    
+    .testimonial-column {
+      height: 300px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .benefit-card {
+      min-width: 220px;
+      padding: 1.5rem;
+    }
+    
+    .security-scroll {
+      gap: 1rem;
+    }
+    
+    .security-badge {
+      padding: 0.4rem 1rem;
+      font-size: 0.75rem;
+    }
+    
+    .horizontal-scroll-item .group {
+      width: 260px;
+      height: 180px;
+      padding: 1.25rem;
+    }
+    
+    .testimonial-column {
+      height: 250px;
+    }
+    
+    .testimonial-card {
+      min-height: 140px;
+      padding: 1.25rem;
+    }
+  }
+
+  /* Enhanced mobile touch scrolling */
+  @media (max-width: 768px) {
+    .horizontal-scroll-container {
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    .benefit-scroll-container {
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
 }

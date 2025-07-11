@@ -5,6 +5,7 @@ import SecurityStrip from "@/components/security-strip";
 import BenefitCards from "@/components/benefit-cards";
 import EmailComposer from "@/components/email-composer";
 import FeaturesSection from "@/components/features-section";
+import Testimonials from "@/components/testimonials";
 import CtaSection from "@/components/cta-section";
 import Footer from "@/components/footer";
 
@@ -18,6 +19,7 @@ export default function Home() {
       <BenefitCards />
       <EmailComposer />
       <FeaturesSection />
+      <Testimonials />
       <CtaSection />
       <Footer />
     </div>

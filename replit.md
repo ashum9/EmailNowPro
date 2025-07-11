@@ -22,18 +22,25 @@ The application follows a monorepo structure with clear separation between clien
 
 ### Frontend Architecture
 - **Framework**: React 18 with TypeScript
-- **Styling**: Tailwind CSS with custom aurora-themed design system
+- **Styling**: Tailwind CSS with clean dark theme (no gradients)
 - **UI Components**: Radix UI primitives with shadcn/ui component library
 - **State Management**: TanStack Query for server state management
 - **Routing**: Wouter for lightweight client-side routing
 - **Forms**: React Hook Form with Zod validation
+- **Animations**: Custom CSS animations with scroll-triggered effects
 
 ### Backend Architecture
 - **Framework**: Express.js with TypeScript
-- **Database**: PostgreSQL with Drizzle ORM
-- **Email Service**: Nodemailer for SMTP email sending
+- **Database**: In-memory storage with MemStorage implementation
+- **Email Service**: Nodemailer with custom SMTP configuration
 - **Session Management**: Connect-pg-simple for PostgreSQL session storage
 - **API Design**: RESTful API with JSON responses
+
+### New Animated Components (Added: January 2025)
+- **Security Strip**: Horizontally scrolling badges with pause-on-hover
+- **Benefit Cards**: Floating cards with smooth animations and mobile swipe
+- **Testimonials**: 3-column infinite vertical scrolling with pause-on-hover
+- **Features Section**: Horizontal scroll triggered by vertical scrolling
 
 ### Database Schema
 - **hr_contacts**: Stores HR professional contact information (name, email, company, position, industry)
@@ -94,11 +101,19 @@ The application follows a monorepo structure with clear separation between clien
 - `NODE_ENV`: Environment mode (development/production)
 
 ### Key Features
-- **Responsive Design**: Mobile-first approach with Tailwind CSS
+- **Responsive Design**: Mobile-first approach with Tailwind CSS and optimized touch scrolling
 - **Real-time Progress**: Live updates during bulk email sending
 - **Error Handling**: Comprehensive error handling with user feedback
 - **Type Safety**: Full TypeScript coverage across the stack
-- **Modern UI**: Aurora-themed design with glass morphism effects
+- **Modern UI**: Clean dark theme with glass morphism effects and smooth animations
 - **Email Tracking**: Complete audit trail of all email activities
+- **Custom SMTP**: Full SMTP configuration support for Nodemailer integration
+
+### Recent Updates (January 2025)
+- **Design Overhaul**: Migrated from aurora gradients to clean dark theme
+- **Animation Framework**: Added scroll-triggered animations and infinite scrolling
+- **Mobile Optimization**: Enhanced responsive design with touch-friendly scrolling
+- **Advanced Features**: Horizontal scroll section with vertical scroll trigger
+- **Testimonials System**: 3-column infinite scrolling testimonials with hover pause
 
 The application is designed to be easily deployable to platforms like Replit, Vercel, or any Node.js hosting service, with minimal configuration required beyond environment variables.
