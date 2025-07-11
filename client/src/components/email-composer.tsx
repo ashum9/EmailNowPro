@@ -360,15 +360,7 @@ export default function EmailComposer() {
                       ))}
                     </div>
                   </div>
-                  <div className="bg-black/30 rounded-lg p-4">
-                    <h4 className="text-lg font-semibold mb-2 text-white">Target Audience</h4>
-                    <div className="text-sm text-gray-300">
-                      <p>🎯 HR Professionals & Recruiters</p>
-                      <p>🏢 Top-tier companies across industries</p>
-                      <p>📊 Pre-verified contact database</p>
-                      <p>🔒 Privacy-compliant targeting</p>
-                    </div>
-                  </div>
+                  {/* Target Audience section removed as requested */}
                 </div>
               )}
 

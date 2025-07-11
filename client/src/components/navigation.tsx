@@ -1,7 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 
-export default function Navigation() {
+type NavigationProps = {
+  onGetStarted?: () => void;
+};
+
+export default function Navigation({ onGetStarted }: NavigationProps) {
   return (
     <nav className="sticky top-0 z-50 glass-effect">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -22,7 +26,7 @@ export default function Navigation() {
               <a href="#" className="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white transition-colors">
                 Support
               </a>
-              <Button className="clean-button">Get Started</Button>
+              <Button className="clean-button" onClick={onGetStarted}>Get Started</Button>
             </div>
           </div>
           <div className="md:hidden">
