@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent } from "@/components/ui/card";
-import { User, Users, Send } from "lucide-react";
+import { User, Users, Send, Settings, Mail, Lock, Globe } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
@@ -29,6 +29,14 @@ export default function EmailComposer() {
   const [message, setMessage] = useState("");
   const [showProgress, setShowProgress] = useState(false);
   const [progress, setProgress] = useState(0);
+  
+  // Email configuration states
+  const [smtpHost, setSmtpHost] = useState("");
+  const [smtpPort, setSmtpPort] = useState("587");
+  const [smtpUser, setSmtpUser] = useState("");
+  const [smtpPassword, setSmtpPassword] = useState("");
+  const [fromEmail, setFromEmail] = useState("");
+  const [showEmailConfig, setShowEmailConfig] = useState(false);
 
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -111,6 +119,15 @@ export default function EmailComposer() {
       return;
     }
 
+    if (!smtpHost || !smtpUser || !smtpPassword || !fromEmail) {
+      toast({
+        title: "Error",
+        description: "Please configure your email settings",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setShowProgress(true);
     setProgress(0);
 
@@ -126,11 +143,20 @@ export default function EmailComposer() {
     }, 200);
 
     try {
+      const emailConfig = {
+        smtpHost,
+        smtpPort: parseInt(smtpPort),
+        smtpUser,
+        smtpPassword,
+        fromEmail,
+      };
+
       if (isBulkMode) {
         await bulkEmailMutation.mutateAsync({
           subject,
           message,
           quantity: selectedQuantity,
+          ...emailConfig,
         });
       } else {
         await individualEmailMutation.mutateAsync({
@@ -139,6 +165,7 @@ export default function EmailComposer() {
           subject,
           message,
           type: "individual",
+          ...emailConfig,
         });
       }
       
@@ -156,40 +183,131 @@ export default function EmailComposer() {
   };
 
   const quantityOptions = [
-    { value: 20, label: "20", color: "text-[var(--primary)]" },
-    { value: 50, label: "50", color: "text-[var(--secondary)]" },
-    { value: 100, label: "100", color: "text-[var(--accent)]" },
+    { value: 20, label: "20", color: "text-white" },
+    { value: 50, label: "50", color: "text-white" },
+    { value: 100, label: "100", color: "text-white" },
   ];
 
   return (
     <>
       <section className="relative z-10 py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
+        <div className="form-container">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              <span className="gradient-text">Email Composer</span>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 clean-text">
+              Email Composer
             </h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
               Choose your sending mode and craft the perfect message for your audience.
             </p>
           </div>
 
-          <Card className="glass-effect border-[var(--light-text)]/10 bg-transparent">
+          <Card className="glass-effect border-white/10 bg-transparent">
             <CardContent className="p-8">
+              {/* Email Configuration Toggle */}
+              <div className="flex items-center justify-between mb-6">
+                <Button
+                  variant="outline"
+                  onClick={() => setShowEmailConfig(!showEmailConfig)}
+                  className="border-white/20 text-white hover:bg-white/10"
+                >
+                  <Settings className="mr-2 h-4 w-4" />
+                  Email Configuration
+                </Button>
+              </div>
+
+              {/* Email Configuration */}
+              {showEmailConfig && (
+                <div className="space-y-6 mb-6 p-6 bg-black/40 rounded-lg border border-white/10">
+                  <div className="flex items-center space-x-2 mb-4">
+                    <Lock className="h-5 w-5 text-white" />
+                    <h3 className="text-lg font-semibold text-white">SMTP Configuration</h3>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <Label htmlFor="smtp-host" className="text-gray-300 mb-2">
+                        SMTP Host
+                      </Label>
+                      <Input
+                        id="smtp-host"
+                        type="text"
+                        placeholder="smtp.gmail.com"
+                        value={smtpHost}
+                        onChange={(e) => setSmtpHost(e.target.value)}
+                        className="bg-black/50 border-white/20 text-white placeholder-gray-400"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="smtp-port" className="text-gray-300 mb-2">
+                        SMTP Port
+                      </Label>
+                      <Input
+                        id="smtp-port"
+                        type="text"
+                        placeholder="587"
+                        value={smtpPort}
+                        onChange={(e) => setSmtpPort(e.target.value)}
+                        className="bg-black/50 border-white/20 text-white placeholder-gray-400"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="smtp-user" className="text-gray-300 mb-2">
+                        SMTP Username
+                      </Label>
+                      <Input
+                        id="smtp-user"
+                        type="email"
+                        placeholder="your-email@gmail.com"
+                        value={smtpUser}
+                        onChange={(e) => setSmtpUser(e.target.value)}
+                        className="bg-black/50 border-white/20 text-white placeholder-gray-400"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="smtp-password" className="text-gray-300 mb-2">
+                        SMTP Password
+                      </Label>
+                      <Input
+                        id="smtp-password"
+                        type="password"
+                        placeholder="your-app-password"
+                        value={smtpPassword}
+                        onChange={(e) => setSmtpPassword(e.target.value)}
+                        className="bg-black/50 border-white/20 text-white placeholder-gray-400"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="from-email" className="text-gray-300 mb-2">
+                      From Email Address
+                    </Label>
+                    <Input
+                      id="from-email"
+                      type="email"
+                      placeholder="noreply@yourcompany.com"
+                      value={fromEmail}
+                      onChange={(e) => setFromEmail(e.target.value)}
+                      className="bg-black/50 border-white/20 text-white placeholder-gray-400"
+                    />
+                  </div>
+                </div>
+              )}
+
               {/* Mode Toggle */}
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center space-x-4">
-                  <User className="text-2xl text-[var(--primary)]" />
-                  <span className="text-lg font-medium">Individual Email</span>
+                  <User className="text-2xl text-white" />
+                  <span className="text-lg font-medium text-white">Individual Email</span>
                 </div>
                 <Switch
                   checked={isBulkMode}
                   onCheckedChange={setIsBulkMode}
-                  className="data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-[var(--primary)] data-[state=checked]:to-[var(--secondary)]"
+                  className="data-[state=checked]:bg-white data-[state=unchecked]:bg-gray-600"
                 />
                 <div className="flex items-center space-x-4">
-                  <span className="text-lg font-medium">Bulk HR Email</span>
-                  <Users className="text-2xl text-[var(--secondary)]" />
+                  <span className="text-lg font-medium text-white">Bulk HR Email</span>
+                  <Users className="text-2xl text-white" />
                 </div>
               </div>
 
@@ -207,7 +325,7 @@ export default function EmailComposer() {
                         placeholder="john.doe@example.com"
                         value={recipientEmail}
                         onChange={(e) => setRecipientEmail(e.target.value)}
-                        className="bg-[var(--dark-slate)]/50 border-[var(--light-text)]/20 text-[var(--light-text)] placeholder-gray-400"
+                        className="bg-black/50 border-white/20 text-white placeholder-gray-400"
                       />
                     </div>
                     <div>
@@ -220,7 +338,7 @@ export default function EmailComposer() {
                         placeholder="John Doe"
                         value={recipientName}
                         onChange={(e) => setRecipientName(e.target.value)}
-                        className="bg-[var(--dark-slate)]/50 border-[var(--light-text)]/20 text-[var(--light-text)] placeholder-gray-400"
+                        className="bg-black/50 border-white/20 text-white placeholder-gray-400"
                       />
                     </div>
                   </div>
@@ -249,15 +367,15 @@ export default function EmailComposer() {
                       ))}
                     </div>
                   </div>
-                  <div className="bg-[var(--dark-slate)]/30 rounded-lg p-4">
-                    <h4 className="text-lg font-semibold mb-2">HR Database Preview</h4>
+                  <div className="bg-black/30 rounded-lg p-4">
+                    <h4 className="text-lg font-semibold mb-2 text-white">HR Database Preview</h4>
                     <div className="text-sm text-gray-300 space-y-1">
                       {hrContacts?.map((contact) => (
                         <div key={contact.id}>
                           • {contact.email} ({contact.name})
                         </div>
                       ))}
-                      <div className="text-[var(--accent)]">
+                      <div className="text-white">
                         + {selectedQuantity - 3} more contacts...
                       </div>
                     </div>
@@ -277,7 +395,7 @@ export default function EmailComposer() {
                     placeholder="Your compelling subject line..."
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
-                    className="bg-[var(--dark-slate)]/50 border-[var(--light-text)]/20 text-[var(--light-text)] placeholder-gray-400"
+                    className="bg-black/50 border-white/20 text-white placeholder-gray-400"
                   />
                 </div>
                 <div>
@@ -290,7 +408,7 @@ export default function EmailComposer() {
                     placeholder="Write your message here..."
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className="bg-[var(--dark-slate)]/50 border-[var(--light-text)]/20 text-[var(--light-text)] placeholder-gray-400 resize-none"
+                    className="bg-black/50 border-white/20 text-white placeholder-gray-400 resize-none"
                   />
                 </div>
               </div>
@@ -300,7 +418,7 @@ export default function EmailComposer() {
                 <Button
                   onClick={handleSendEmail}
                   disabled={individualEmailMutation.isPending || bulkEmailMutation.isPending}
-                  className="glow-button text-white px-8 py-4 text-lg font-semibold"
+                  className="clean-button px-8 py-4 text-lg font-semibold"
                 >
                   <Send className="mr-2 h-5 w-5" />
                   {isBulkMode ? "Send Bulk Emails" : "Send Email"}

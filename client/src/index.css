@@ -3,28 +3,28 @@
 @tailwind utilities;
 
 :root {
-  --background: hsl(240, 10%, 3.9%);
-  --foreground: hsl(0, 0%, 98%);
-  --muted: hsl(240, 3.7%, 15.9%);
-  --muted-foreground: hsl(240, 5%, 64.9%);
-  --popover: hsl(240, 10%, 3.9%);
-  --popover-foreground: hsl(0, 0%, 98%);
-  --card: hsl(240, 10%, 3.9%);
-  --card-foreground: hsl(0, 0%, 98%);
-  --border: hsl(240, 3.7%, 15.9%);
-  --input: hsl(240, 3.7%, 15.9%);
-  --primary: hsl(243, 89%, 67%);
-  --primary-foreground: hsl(216, 100%, 99%);
-  --secondary: hsl(271, 76%, 72%);
-  --secondary-foreground: hsl(0, 0%, 98%);
-  --accent: hsl(189, 94%, 43%);
-  --accent-foreground: hsl(0, 0%, 98%);
+  --background: hsl(0, 0%, 0%);
+  --foreground: hsl(0, 0%, 100%);
+  --muted: hsl(0, 0%, 8%);
+  --muted-foreground: hsl(0, 0%, 60%);
+  --popover: hsl(0, 0%, 0%);
+  --popover-foreground: hsl(0, 0%, 100%);
+  --card: hsl(0, 0%, 5%);
+  --card-foreground: hsl(0, 0%, 100%);
+  --border: hsl(0, 0%, 15%);
+  --input: hsl(0, 0%, 10%);
+  --primary: hsl(0, 0%, 100%);
+  --primary-foreground: hsl(0, 0%, 0%);
+  --secondary: hsl(0, 0%, 20%);
+  --secondary-foreground: hsl(0, 0%, 100%);
+  --accent: hsl(0, 0%, 30%);
+  --accent-foreground: hsl(0, 0%, 100%);
   --destructive: hsl(0, 62.8%, 30.6%);
-  --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: hsl(240, 4.9%, 83.9%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --ring: hsl(0, 0%, 30%);
   --radius: 0.5rem;
-  --dark-slate: hsl(215, 28%, 6%);
-  --light-text: hsl(210, 40%, 98%);
+  --dark-slate: hsl(0, 0%, 0%);
+  --light-text: hsl(0, 0%, 100%);
 }
 
 @layer base {
@@ -47,9 +47,9 @@
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle at 25% 25%, hsl(243, 89%, 67%, 0.4) 0%, transparent 50%),
-                radial-gradient(circle at 75% 75%, hsl(271, 76%, 72%, 0.4) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, hsl(189, 94%, 43%, 0.3) 0%, transparent 50%);
+    background: radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.01) 0%, transparent 50%);
     animation: aurora 20s ease-in-out infinite;
     z-index: 0;
   }
@@ -61,104 +61,175 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at 80% 20%, hsl(271, 76%, 72%, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 20% 80%, hsl(189, 94%, 43%, 0.3) 0%, transparent 50%);
+    background: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.01) 0%, transparent 50%);
     animation: aurora-2 25s ease-in-out infinite;
   }
 
   .glass-effect {
-    background: rgba(15, 23, 42, 0.8);
+    background: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(248, 250, 252, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  .glow-button {
-    background: linear-gradient(135deg, hsl(243, 89%, 67%), hsl(271, 76%, 72%));
+  .clean-button {
+    background: hsl(0, 0%, 100%);
+    color: hsl(0, 0%, 0%);
+    border: 1px solid hsl(0, 0%, 100%);
     transition: all 0.3s ease;
   }
 
-  .glow-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+  .clean-button:hover {
+    background: hsl(0, 0%, 90%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
   }
 
-  .gradient-text {
-    background: linear-gradient(135deg, hsl(243, 89%, 67%), hsl(271, 76%, 72%), hsl(189, 94%, 43%));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
+  .clean-text {
+    color: hsl(0, 0%, 100%);
   }
 
   .email-card {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
-    border: 1px solid rgba(248, 250, 252, 0.1);
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
   }
 
   .quantity-option {
     padding: 1rem;
-    border: 2px solid rgba(248, 250, 252, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    background: rgba(15, 23, 42, 0.5);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
   }
 
   .quantity-option:hover {
-    border-color: hsl(243, 89%, 67%);
-    background: rgba(99, 102, 241, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.05);
   }
 
   .quantity-option.selected {
-    border-color: hsl(243, 89%, 67%);
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.1);
   }
 
   .progress-bar {
     width: 100%;
     height: 8px;
-    background: rgba(248, 250, 252, 0.1);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 4px;
     overflow: hidden;
   }
 
   .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, hsl(243, 89%, 67%), hsl(271, 76%, 72%));
+    background: hsl(0, 0%, 100%);
     transition: width 0.3s ease;
+  }
+
+  .security-strip {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    background: rgba(255, 255, 255, 0.02);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .security-scroll {
+    display: flex;
+    animation: scroll 30s linear infinite;
+    gap: 2rem;
+    padding: 1rem 0;
+  }
+
+  .security-scroll:hover {
+    animation-play-state: paused;
+  }
+
+  .security-badge {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    padding: 0.5rem 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+  }
+
+  .benefit-card {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    min-width: 280px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .benefit-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 48px rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .benefit-card:nth-child(1) { animation-delay: 0s; }
+  .benefit-card:nth-child(2) { animation-delay: 0.5s; }
+  .benefit-card:nth-child(3) { animation-delay: 1s; }
+  .benefit-card:nth-child(4) { animation-delay: 1.5s; }
+  .benefit-card:nth-child(5) { animation-delay: 2s; }
+  .benefit-card:nth-child(6) { animation-delay: 2.5s; }
+
+  .form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  @media (min-width: 1024px) {
+    .form-container {
+      padding: 3rem;
+    }
   }
 
   @keyframes aurora {
     0%, 100% { 
       transform: scale(1) rotate(0deg); 
-      opacity: 0.5; 
+      opacity: 0.3; 
     }
     50% { 
-      transform: scale(1.2) rotate(180deg); 
-      opacity: 0.8; 
+      transform: scale(1.1) rotate(180deg); 
+      opacity: 0.5; 
     }
   }
 
   @keyframes aurora-2 {
     0%, 100% { 
-      transform: scale(1.1) rotate(0deg); 
-      opacity: 0.3; 
+      transform: scale(1.05) rotate(0deg); 
+      opacity: 0.2; 
     }
     50% { 
-      transform: scale(0.9) rotate(-180deg); 
-      opacity: 0.7; 
+      transform: scale(0.95) rotate(-180deg); 
+      opacity: 0.4; 
     }
   }
 
-  @keyframes pulse-glow {
-    0% { 
-      box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); 
-    }
-    100% { 
-      box-shadow: 0 0 40px rgba(99, 102, 241, 0.8); 
-    }
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
   }
 
   .animate-pulse-glow {

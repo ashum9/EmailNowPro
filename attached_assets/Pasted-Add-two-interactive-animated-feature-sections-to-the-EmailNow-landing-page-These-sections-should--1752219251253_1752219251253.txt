@@ -1,0 +1,34 @@
+Add two interactive animated feature sections to the “EmailNow” landing page. These sections should feel modern, smooth, and visually aligned with a futuristic dark theme using glowing text, subtle motion, and a soft Aurora-style background.
+
+1. Horizontally Scrolling Security Features:
+- Create a full-width strip that continuously scrolls feature badges from right to left in an infinite loop.
+- The content should scroll smoothly and automatically on page load.
+- On hover, the scroll should pause to allow users to read easily.
+- Each badge should display one security advantage such as:
+  “Bank-level Encryption”, “Spam Protection”, “Global Delivery”, “End-to-End Security”, “Lightning Fast”, “99.9% Uptime”
+- Style each badge as a pill:
+  - Rounded edges
+  - Light border glow
+  - Transparent background
+  - White or gray text
+  - Slight inner shadow or blur to match the dark glowing theme
+- Place all badges inside a container with hidden overflow to achieve the seamless looping effect.
+
+2. Floating Benefit Cards (FlowingMenu Style):
+- Directly below the security strip, create a feature showcase section that highlights key product benefits.
+- Display a row of floating or sliding cards that feel like they move or drift gently into view.
+- These cards should each show one unique product value:
+  - “Cold Email Rate Limiting”
+  - “Built-in Analytics”
+  - “Spam Score Checker”
+  - “Domain Warmup Support”
+  - “SMTP Flexibility”
+  - “Automatic Retry Engine”
+- Use animations or motion to make the cards slightly shift or float as they enter.
+- Cards should:
+  - Be spaced evenly in a horizontal line
+  - Support swipe scrolling on mobile
+  - Respond on hover with a glow or scale effect
+  - Have subtle shadow, glassy or blurred borders, and clean white text
+
+Both sections should be responsive and maintain the immersive look and feel of a dark, secure, tech-forward platform. The layout must not feel static — it should constantly breathe and move subtly to reflect the power and intelligence of the product.
