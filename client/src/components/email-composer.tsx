@@ -41,14 +41,7 @@ export default function EmailComposer() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  // Fetch HR contacts for preview
-  const { data: hrContacts } = useQuery<HrContact[]>({
-    queryKey: ["/api/hr-contacts"],
-    queryFn: async () => {
-      const response = await fetch("/api/hr-contacts?limit=3");
-      return response.json();
-    },
-  });
+  // Remove HR contacts query for security - don't expose contact data to client
 
   // Individual email mutation
   const individualEmailMutation = useMutation({
@@ -298,7 +291,7 @@ export default function EmailComposer() {
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center space-x-4">
                   <User className="text-2xl text-white" />
-                  <span className="text-lg font-medium text-white">Individual Email</span>
+                  <span className="text-lg font-medium text-white hidden sm:inline">Individual Email</span>
                 </div>
                 <Switch
                   checked={isBulkMode}
@@ -306,7 +299,7 @@ export default function EmailComposer() {
                   className="data-[state=checked]:bg-white data-[state=unchecked]:bg-gray-600"
                 />
                 <div className="flex items-center space-x-4">
-                  <span className="text-lg font-medium text-white">Bulk HR Email</span>
+                  <span className="text-lg font-medium text-white hidden sm:inline">Bulk HR Email</span>
                   <Users className="text-2xl text-white" />
                 </div>
               </div>
@@ -368,16 +361,12 @@ export default function EmailComposer() {
                     </div>
                   </div>
                   <div className="bg-black/30 rounded-lg p-4">
-                    <h4 className="text-lg font-semibold mb-2 text-white">HR Database Preview</h4>
-                    <div className="text-sm text-gray-300 space-y-1">
-                      {hrContacts?.map((contact) => (
-                        <div key={contact.id}>
-                          • {contact.email} ({contact.name})
-                        </div>
-                      ))}
-                      <div className="text-white">
-                        + {selectedQuantity - 3} more contacts...
-                      </div>
+                    <h4 className="text-lg font-semibold mb-2 text-white">Target Audience</h4>
+                    <div className="text-sm text-gray-300">
+                      <p>🎯 HR Professionals & Recruiters</p>
+                      <p>🏢 Top-tier companies across industries</p>
+                      <p>📊 Pre-verified contact database</p>
+                      <p>🔒 Privacy-compliant targeting</p>
                     </div>
                   </div>
                 </div>

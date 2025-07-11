@@ -5,12 +5,12 @@ export default function HeroSection() {
   return (
     <section className="relative z-10 py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto text-center">
-        <h1 className="text-4xl md:text-6xl font-bold mb-6">
+        <h1 className="hero-title text-4xl md:text-6xl font-bold mb-6">
           <span className="clean-text">Email Automation</span>
           <br />
           <span className="clean-text">Simplified</span>
         </h1>
-        <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto">
+        <p className="hero-subtitle text-lg md:text-xl lg:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto">
           Send targeted emails to individuals or reach hundreds of HR professionals with our advanced automation platform.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">

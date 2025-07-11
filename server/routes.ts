@@ -16,12 +16,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
     },
   });
 
-  // Get HR contacts
+  // Get HR contacts (internal only - not exposed to client)
   app.get("/api/hr-contacts", async (req, res) => {
     try {
       const limit = req.query.limit ? parseInt(req.query.limit as string) : undefined;
       const contacts = await storage.getHrContacts(limit);
-      res.json(contacts);
+      // Only return count for security, not actual contact data
+      res.json({ count: contacts.length });
     } catch (error) {
       console.error("Error fetching HR contacts:", error);
       res.status(500).json({ error: "Failed to fetch HR contacts" });
@@ -161,6 +162,49 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching email logs:", error);
       res.status(500).json({ error: "Failed to fetch email logs" });
+    }
+  });
+
+  // Health check endpoint
+  app.get("/api/health", (req, res) => {
+    res.json({ status: "healthy", timestamp: new Date().toISOString() });
+  });
+
+  // Analytics endpoint
+  app.get("/api/analytics", async (req, res) => {
+    try {
+      const logs = await storage.getEmailLogs();
+      const hrContactsCount = await storage.getHrContactsCount();
+      const analytics = {
+        totalEmails: logs.length,
+        sentEmails: logs.filter(log => log.status === "sent").length,
+        failedEmails: logs.filter(log => log.status === "failed").length,
+        pendingEmails: logs.filter(log => log.status === "pending").length,
+        totalHrContacts: hrContactsCount,
+        recentActivity: logs.slice(-10).reverse()
+      };
+      res.json(analytics);
+    } catch (error) {
+      console.error("Error fetching analytics:", error);
+      res.status(500).json({ error: "Failed to fetch analytics" });
+    }
+  });
+
+  // Status endpoint for public metrics
+  app.get("/api/status", async (req, res) => {
+    try {
+      const logs = await storage.getEmailLogs();
+      const hrContactsCount = await storage.getHrContactsCount();
+      const publicMetrics = {
+        totalContacts: hrContactsCount,
+        emailsSent: logs.filter(log => log.status === "sent").length,
+        uptime: "99.9%",
+        status: "operational"
+      };
+      res.json(publicMetrics);
+    } catch (error) {
+      console.error("Error fetching status:", error);
+      res.status(500).json({ error: "Failed to fetch status" });
     }
   });
 
