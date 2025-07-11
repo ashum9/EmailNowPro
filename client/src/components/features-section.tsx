@@ -102,14 +102,14 @@ export default function FeaturesSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative z-10 py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section id="features-section" ref={sectionRef} className="relative z-10 py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 clean-text">
-            Advanced Features
+            Full Feature Suite
           </h2>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Everything you need to run successful email campaigns with advanced automation and analytics.
+            Explore all the tools and capabilities that make EmailNow powerful and flexible for your business.
           </p>
         </div>
         

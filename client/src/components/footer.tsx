@@ -74,7 +74,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="border-t border-white/10 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 2024 EmailNow. All rights reserved.</p>
+          <p>&copy;VatsArk D1 2025 </p>
         </div>
       </div>
     </footer>
