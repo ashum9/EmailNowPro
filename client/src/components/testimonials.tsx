@@ -1,5 +1,76 @@
 export default function Testimonials() {
-  const testimonials = ;
+  const testimonials = [
+  // Column 1
+  [
+    {
+      name: "Vivek Sharma",
+      role: "Marketing Director at TechCorp",
+      message: "EmailNow has revolutionized our email campaigns. The automation features saved us hours of manual work and improved our conversion rates by 40%."
+    },
+    {
+      name: "Rishabh Dwivedi",
+      role: "CEO at StartupX",
+      message: "The HR database integration is incredible. We've connected with top talent across the industry and streamlined our recruitment process completely."
+    },
+    {
+      name: "Shashwat Mishra",
+      role: "Growth Manager at InnovateTech",
+      message: "Clean, professional interface with powerful features. The bulk email functionality works flawlessly and the analytics are comprehensive."
+    },
+    {
+      name: "Divyansh Yadav",
+      role: "Founder at CloudTech",
+      message: "Outstanding deliverability rates and excellent customer support. EmailNow has become an essential part of our marketing stack."
+    }
+  ],
+  // Column 2
+  [
+    {
+      name: "Ashutosh Pandey",
+      role: "Head of Sales at GlobalCorp",
+      message: "The SMTP flexibility is amazing. We can use our own email infrastructure while leveraging EmailNow's powerful automation features."
+    },
+    {
+      name: "Mayank Tripathi",
+      role: "Marketing Lead at FutureSoft",
+      message: "Real-time analytics and spam score checking have improved our email performance dramatically. Highly recommended for serious marketers."
+    },
+    {
+      name: "Ayush Mishra",
+      role: "Business Developer at MegaCorp",
+      message: "The domain warmup support helped us establish excellent sender reputation. Our emails now consistently reach the inbox."
+    },
+    {
+      name: "Vaibhav Pandey",
+      role: "VP Marketing at HealthTech",
+      message: "Cold email rate limiting and automatic retry features are game-changers. Our outreach campaigns are now more effective than ever."
+    }
+  ],
+  // Column 3
+  [
+    {
+      name: "Anuj Pundir",
+      role: "Digital Marketing Manager at FinTech",
+      message: "Bank-level encryption and security features give us peace of mind. Perfect for handling sensitive business communications."
+    },
+    {
+      name: "Sushank Sahil",
+      role: "Growth Hacker at EduTech",
+      message: "99.9% uptime and lightning-fast delivery. EmailNow never lets us down during critical campaign launches."
+    },
+    {
+      name: "Sreyash Singh",
+      role: "Content Director at RetailTech",
+      message: "The user interface is intuitive and the features are comprehensive. Everything we need for professional email automation."
+    },
+    {
+      name: "Arsh Tiwari",
+      role: "Marketing Strategist at BioTech",
+      message: "Global delivery network ensures our emails reach recipients worldwide. The international reach is impressive."
+    }
+  ]
+]
+;
 
   return (
     <section className="relative z-10 py-20 px-4 sm:px-6 lg:px-8">
