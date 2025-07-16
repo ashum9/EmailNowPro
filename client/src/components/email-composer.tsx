@@ -109,10 +109,13 @@ export default function EmailComposer() {
           setCsvRecipients([]);
         } else {
           // Expecting columns: email, name (optionally more)
-          const validRows = (results.data as any[]).filter(row => row.email && row.name);
+          let validRows = (results.data as any[]).filter(row => row.email && row.name);
           if (validRows.length === 0) {
             setCsvError("No valid rows found. CSV must have 'email' and 'name' columns.");
             setCsvRecipients([]);
+          } else if (validRows.length > 250) {
+            setCsvError("CSV contains more than 250 recipients. Only the first 250 will be used.");
+            setCsvRecipients(validRows.slice(0, 250));
           } else {
             setCsvRecipients(validRows);
           }
@@ -382,25 +385,28 @@ export default function EmailComposer() {
               {/* Bulk Mode */}
               {isBulkMode && (
                 <div className="space-y-6 mb-6">
-                  <div>
-                    <Label className="text-gray-300 mb-4">Select Quantity</Label>
-                    <div className="grid grid-cols-3 gap-4 mb-6">
-                      {quantityOptions.map((option) => (
-                        <div
-                          key={option.value}
-                          className={`quantity-option ${
-                            selectedQuantity === option.value ? "selected" : ""
-                          }`}
-                          onClick={() => setSelectedQuantity(option.value)}
-                        >
-                          <div className={`text-2xl font-bold ${option.color} mb-2`}>
-                            {option.label}
+                  {/* Only show quantity options if no CSV is loaded */}
+                  {csvRecipients.length === 0 && (
+                    <div>
+                      <Label className="text-gray-300 mb-4">Select Quantity</Label>
+                      <div className="grid grid-cols-3 gap-4 mb-6">
+                        {quantityOptions.map((option) => (
+                          <div
+                            key={option.value}
+                            className={`quantity-option ${
+                              selectedQuantity === option.value ? "selected" : ""
+                            }`}
+                            onClick={() => setSelectedQuantity(option.value)}
+                          >
+                            <div className={`text-2xl font-bold ${option.color} mb-2`}>
+                              {option.label}
+                            </div>
+                            <div className="text-sm text-gray-300">Emails</div>
                           </div>
-                          <div className="text-sm text-gray-300">Emails</div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
                   <div>
                     <Label className="text-gray-300 mb-2">Import Recipients from CSV</Label>
                     <input
@@ -409,7 +415,7 @@ export default function EmailComposer() {
                       onChange={handleCsvUpload}
                       className="block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-white/10 file:text-white hover:file:bg-white/20"
                     />
-                    <div className="text-xs text-gray-400 mt-1">CSV must have columns: <b>email</b>, <b>name</b></div>
+                    <div className="text-xs text-gray-400 mt-1">CSV must have columns: <b>email</b>, <b>name</b>. Max 250 recipients.</div>
                     {csvError && <div className="text-red-400 text-xs mt-1">{csvError}</div>}
                     {csvRecipients.length > 0 && (
                       <div className="text-green-400 text-xs mt-2">{csvRecipients.length} recipients loaded from CSV.</div>
