@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Papa from "papaparse";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -22,6 +23,8 @@ interface HrContact {
 
 export default function EmailComposer() {
   const [isBulkMode, setIsBulkMode] = useState(false);
+  const [csvRecipients, setCsvRecipients] = useState<any[]>([]);
+  const [csvError, setCsvError] = useState<string>("");
   const [selectedQuantity, setSelectedQuantity] = useState(20);
   const [recipientEmail, setRecipientEmail] = useState("");
   const [recipientName, setRecipientName] = useState("");
@@ -93,6 +96,35 @@ export default function EmailComposer() {
     },
   });
 
+  const handleCsvUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCsvError("");
+    const file = e.target.files?.[0];
+    if (!file) return;
+    Papa.parse(file, {
+      header: true,
+      skipEmptyLines: true,
+      complete: (results: Papa.ParseResult<any>) => {
+        if (results.errors.length) {
+          setCsvError("Error parsing CSV file.");
+          setCsvRecipients([]);
+        } else {
+          // Expecting columns: email, name (optionally more)
+          const validRows = (results.data as any[]).filter(row => row.email && row.name);
+          if (validRows.length === 0) {
+            setCsvError("No valid rows found. CSV must have 'email' and 'name' columns.");
+            setCsvRecipients([]);
+          } else {
+            setCsvRecipients(validRows);
+          }
+        }
+      },
+      error: () => {
+        setCsvError("Failed to read CSV file.");
+        setCsvRecipients([]);
+      }
+    });
+  };
+
   const handleSendEmail = async () => {
     if (!subject || !message) {
       toast({
@@ -145,12 +177,21 @@ export default function EmailComposer() {
       };
 
       if (isBulkMode) {
-        await bulkEmailMutation.mutateAsync({
-          subject,
-          message,
-          quantity: selectedQuantity,
-          ...emailConfig,
-        });
+        if (csvRecipients.length > 0) {
+          await bulkEmailMutation.mutateAsync({
+            subject,
+            message,
+            recipients: csvRecipients,
+            ...emailConfig,
+          });
+        } else {
+          await bulkEmailMutation.mutateAsync({
+            subject,
+            message,
+            quantity: selectedQuantity,
+            ...emailConfig,
+          });
+        }
       } else {
         await individualEmailMutation.mutateAsync({
           recipientEmail,
@@ -343,7 +384,7 @@ export default function EmailComposer() {
                 <div className="space-y-6 mb-6">
                   <div>
                     <Label className="text-gray-300 mb-4">Select Quantity</Label>
-                    <div className="grid grid-cols-3 gap-4">
+                    <div className="grid grid-cols-3 gap-4 mb-6">
                       {quantityOptions.map((option) => (
                         <div
                           key={option.value}
@@ -360,7 +401,20 @@ export default function EmailComposer() {
                       ))}
                     </div>
                   </div>
-                  {/* Target Audience section removed as requested */}
+                  <div>
+                    <Label className="text-gray-300 mb-2">Import Recipients from CSV</Label>
+                    <input
+                      type="file"
+                      accept=".csv"
+                      onChange={handleCsvUpload}
+                      className="block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-white/10 file:text-white hover:file:bg-white/20"
+                    />
+                    <div className="text-xs text-gray-400 mt-1">CSV must have columns: <b>email</b>, <b>name</b></div>
+                    {csvError && <div className="text-red-400 text-xs mt-1">{csvError}</div>}
+                    {csvRecipients.length > 0 && (
+                      <div className="text-green-400 text-xs mt-2">{csvRecipients.length} recipients loaded from CSV.</div>
+                    )}
+                  </div>
                 </div>
               )}
 

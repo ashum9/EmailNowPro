@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import AuroraBackground from "@/components/aurora-background";
 import Navigation from "@/components/navigation";
 import HeroSection from "@/components/hero-section";
@@ -11,23 +10,17 @@ import CtaSection from "@/components/cta-section";
 import Footer from "@/components/footer";
 
 export default function Home() {
-  const composerRef = useRef<HTMLDivElement>(null);
-  const scrollToComposer = () => {
-    composerRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">
       <AuroraBackground />
-      <Navigation onGetStarted={scrollToComposer} />
-      <HeroSection onStartFreeTrial={scrollToComposer} />
+      <Navigation />
+      <HeroSection />
       <SecurityStrip />
       <BenefitCards />
-      <div ref={composerRef}>
-        <EmailComposer />
-      </div>
+      <EmailComposer />
       <FeaturesSection />
       <Testimonials />
-      <CtaSection onStartFreeTrial={scrollToComposer} />
+      <CtaSection />
       <Footer />
     </div>
   );
