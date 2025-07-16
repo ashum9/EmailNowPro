@@ -87,17 +87,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Send bulk emails
   app.post("/api/send-bulk-emails", async (req, res) => {
     try {
-      const { subject, message, quantity } = req.body;
-      
-      if (!subject || !message || !quantity) {
-        return res.status(400).json({ error: "Subject, message, and quantity are required" });
+      const { subject, message, quantity, recipients } = req.body;
+      if (!subject || !message) {
+        return res.status(400).json({ error: "Subject and message are required" });
       }
 
-      // Get HR contacts based on quantity
-      const contacts = await storage.getHrContacts(quantity);
-      
+      let contacts = [];
+      if (Array.isArray(recipients) && recipients.length > 0) {
+        // Use recipients from CSV upload
+        contacts = recipients.slice(0, 250).map((r) => ({
+          email: r.email,
+          name: r.name || "",
+        }));
+      } else if (quantity) {
+        // Fallback to HR contacts by quantity
+        contacts = await storage.getHrContacts(quantity);
+      } else {
+        return res.status(400).json({ error: "Either recipients array or quantity is required" });
+      }
+
       if (contacts.length === 0) {
-        return res.status(400).json({ error: "No HR contacts available" });
+        return res.status(400).json({ error: "No recipients available" });
       }
 
       const emailPromises = contacts.map(async (contact) => {
